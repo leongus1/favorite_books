@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Books</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+<body>
+
+    <div id="canvas">
+        <div id="header">
+            <h1>Welcome, {{request.session.name}}</h1>
+            <a href="/logout">Log Out</a>
+        </div>
+        <div id="content">
+            <div id="add">
+                <h1>{{book.title}}</h1>
+                <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</p>
+                <p>Added on: {{book.created_at}}</p>
+                <p>Last updated on: {{book.modified_at}}</p>
+                <p>Description: {{book.description}}</p>
+                <br><br><br>
+                <a href="/books">Go Back to List</a>
+
+            </div>
+
+            <div id="book_list">
+                <h1>Users Who Like This Book</h1>
+                <ul>
+                {% for user in book.users_who_like.all %}
+                    <li>{{user.first_name}} {{user.last_name}}</li>
+                {% endfor %}
+                </ul>
+                <a href="/books/{{book.id}}/like">Add to Favorites</a>
+            </div>
+        </div>  
+
+    </div>
+    
+</body>
+</html>

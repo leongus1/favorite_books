@@ -1,0 +1,40 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#content{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+#header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px solid black;
+}
+
+#header > a{
+    margin: auto 5px;
+}
+
+.label-col{
+    display: inline-block;
+    width: 100px;
+    vertical-align: top;
+    margin-top: 15px;
+
+}
+
+.input-col{
+    display: inline-block;
+    width: 200px;
+    margin-top: 15px;
+}
+
+.button{
+    display: flex;
+    margin-top: 20px;
+    text-align: right;
+    
+}
