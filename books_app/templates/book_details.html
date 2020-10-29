@@ -17,14 +17,31 @@
         </div>
         <div id="content">
             <div id="add">
-                <h1>{{book.title}}</h1>
-                <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</p>
-                <p>Added on: {{book.created_at}}</p>
-                <p>Last updated on: {{book.modified_at}}</p>
-                <p>Description: {{book.description}}</p>
-                <br><br><br>
-                <a href="/books">Go Back to List</a>
+                <form action="update" method="post">
+                    {% csrf_token %}
+                    {% if request.session.user_id == book.uploaded_by.id %}
+                        <input id="big-header" type="text" name="title" value="{{book.title}}">
+                    {% else %}
+                        <h1>{{book.title}}</h1>
+                    {% endif %}
+                    <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</p>
+                    <p>Added on: {{book.created_at}}</p>
+                    <p>Last updated on: {{book.modified_at}}</p>
+                    {% if request.session.user_id == book.uploaded_by.id %}
+                        <textarea class="input-col" name="description"  cols="1" rows="5">{{book.description}}</textarea>     <br><br>
+                        <div id="submit_button">
+                            <input type="submit" value="Update">
+                            <button><a id="delete_book" href="/books/{{book.id}}/delete">Delete book</a></button>
+                        </div><br>             
+                        {% else %}
+                        <p>Description: {{book.description}}</p>
+                    {% endif %}
+                    
+                    <br><br><br>
+                    <a href="/books">Go Back to List</a>
+                </form>
 
+                
             </div>
 
             <div id="book_list">
@@ -34,7 +51,11 @@
                     <li>{{user.first_name}} {{user.last_name}}</li>
                 {% endfor %}
                 </ul>
+                {% if user in book.users_who_like.all %}
+                <a href="/books/{{book.id}}/unlike">Remove Favorites</a>
+                {% else %}
                 <a href="/books/{{book.id}}/like">Add to Favorites</a>
+                {% endif %}
             </div>
         </div>  
 

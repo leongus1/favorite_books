@@ -1,4 +1,5 @@
 from django.db import models
+import re
 
 # Create your models here.
 
@@ -14,7 +15,7 @@ class UserManager(models.Manager):
             errors['password_len'] = "Password should be at least 8 characters long."
         if not EMAIL_REGEX.match(postData['email']):
             errors['email_format'] = "Email format is invalid."
-        if not postData['password']==postData['pwd_conf']:
+        if not postData['password']==postData['conf_pw']:
             errors['pw_match'] = "Passwords do not match."
             
         return errors

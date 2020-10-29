@@ -17,6 +17,9 @@
         <div id="content">
             <div id="add">
                 <h1>Add a Favorite Book</h1>
+                {% for message in messages %}
+                    <li>{{message}}</li>
+                {% endfor %}
                 <form action="/books/add/" method="post">
                     {% csrf_token %}
                     <label class="label-col">Title</label>
@@ -26,15 +29,21 @@
                     <input type="submit" value="Add" class="button">
 
                 </form><br>
+
+                <a href="/books/user_favorites">View your Favorites List</a>
             </div>
 
             <div id="book_list">
                 <h1>All Books</h1>
                 {% for book in books %}
-                    <a href="/books/{{book.id}}">{{book.title}}</a><br>
-                    <p>(added by {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}})</p>
-                    <p>{{book.description}}</p>
-                    
+                    <a class="book_link" href="/books/{{book.id}}">{{book.title}}</a><br>
+                    <p class="book_details">(added by {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}})</p>
+                    {% if user in book.users_who_like.all %}
+                        <i>This is one of your favorites.</i><br>
+                    {% else %}
+                        <a class="like" href="books/{{book.id}}/like">Add to Favorites</a><br>
+                    {% endif %}
+                    <br>
                 {% endfor %}
             </div>
         </div>  
