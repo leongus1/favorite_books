@@ -20,6 +20,8 @@
                 <form action="update" method="post">
                     {% csrf_token %}
                     {% if request.session.user_id == book.uploaded_by.id %}
+                        <br>
+                       <i>{{request.session.updated_message}}</i><br>
                         <input id="big-header" type="text" name="title" value="{{book.title}}">
                     {% else %}
                         <h1>{{book.title}}</h1>

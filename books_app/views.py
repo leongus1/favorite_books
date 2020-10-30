@@ -8,6 +8,7 @@ from django.contrib import messages
 
 #RENDER
 def index(request):
+    request.session['updated_message'] = ""
     context={
         'books': Books.objects.all(),
         'user': Users.objects.get(id=request.session['user_id'])
@@ -37,10 +38,12 @@ def create_book(request):
         return redirect('/books')
     
 def like_book(request, book_id):
+    request.session['updated_message'] = ""
     Books.objects.get(id=book_id).users_who_like.add(Users.objects.get(id=request.session['user_id']))
     return redirect(f'/books/{book_id}')
 
 def unlike_book(request, book_id):
+    request.session['updated_message'] = ""
     Books.objects.get(id=book_id).users_who_like.remove(Users.objects.get(id=request.session['user_id']))
     return redirect(f'/books/{book_id}')
 
@@ -50,9 +53,11 @@ def update_book(request, book_id):
         book1.title = request.POST['title']
         book1.description = request.POST['description']
         book1.save()
+        request.session['updated_message'] = "Book updated"
     return redirect (f"/books/{book_id}")
 
 def delete_book(request, book_id):
+    request.session['updated_message'] = ""
     print('request to delete, right before')
     book1 = Books.objects.get(id=book_id)
     book1.delete()

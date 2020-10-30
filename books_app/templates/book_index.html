@@ -20,7 +20,7 @@
                 {% for message in messages %}
                     <li>{{message}}</li>
                 {% endfor %}
-                <form action="/books/add/" method="post">
+                <form action="/books/add" method="post">
                     {% csrf_token %}
                     <label class="label-col">Title</label>
                     <input class="input-col" type="text" name="title"><br>
@@ -41,7 +41,7 @@
                     {% if user in book.users_who_like.all %}
                         <i>This is one of your favorites.</i><br>
                     {% else %}
-                        <a class="like" href="books/{{book.id}}/like">Add to Favorites</a><br>
+                        <a class="like" href="/books/{{book.id}}/like">Add to Favorites</a><br>
                     {% endif %}
                     <br>
                 {% endfor %}
